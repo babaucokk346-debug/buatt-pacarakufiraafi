@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Sayang</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            background-color: #000;
+            font-family: 'Arial', sans-serif;
+            color: white;
+            overflow: hidden;
+        }
+
+        .page {
+            display: none; 
+            height: 100vh;
+            width: 100vw;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            animation: fadeIn 1s ease;
+        }
+
+        .active { display: flex; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .reminder {
+            background: rgba(255, 182, 193, 0.3);
+            color: #ffb3c1;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+        }
+
+        h1 { font-size: 2.2rem; margin-bottom: 10px; color: #fb6f92; }
+        p { font-size: 1rem; line-height: 1.6; max-width: 85%; color: #efefef; }
+
+        .photo-container {
+            width: 260px;
+            height: 360px;
+            border: 6px solid white;
+            border-radius: 15px;
+            margin: 20px 0;
+            overflow: hidden;
+            box-shadow: 0 0 25px rgba(251, 111, 146, 0.4);
+        }
+        .photo-container img { width: 100%; height: 100%; object-fit: cover; }
+
+        .next-btn {
+            margin-top: 30px;
+            background: #fb6f92;
+            color: white;
+            border: none;
+            padding: 14px 30px;
+            border-radius: 30px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(251, 111, 146, 0.3);
+            transition: 0.3s;
+        }
+        
+        .next-btn:active { transform: scale(0.9); }
+
+        .heart {
+            position: fixed;
+            bottom: -20px;
+            color: #fb6f92;
+            font-size: 20px;
+            animation: fly 3s linear forwards;
+            z-index: 99;
+        }
+        @keyframes fly {
+            to { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="mySong">
+        <source src="lagu.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="page active" id="p1">
+        <div class="reminder">special day for a special person. ✨</div>
+        <h1>Eh, hari ini hari apa ya?</h1>
+        <p>Coba diingat-ingat dulu... 🤔</p>
+        <button class="next-btn" onclick="nextPage(2)">Klik kalau udah tahu!</button>
+    </div>
+
+    <div class="page" id="p2">
+        <div class="reminder">hbd my favorite human. 🎂</div>
+        <h1>Happy Birthday! 🎉</h1>
+        <div class="photo-container">
+            <img src="cewek.jpg" alt="Zafira Zahra">
+        </div>
+        <p>Selamat ulang tahun buat kamu sayang aku <b>Zafira Zahra</b>. <br> Bahagia terus ya, sayang mwahh semengat kuliah nya.</p>
+        <button class="next-btn" onclick="nextPage(3)">Ada pesan kecil buat kamu...</button>
+    </div>
+
+    <div class="page" id="p3">
+        <h1>Wish You All The Best</h1>
+        <div class="photo-container" style="height: 250px;">
+            <img src="cewek2.jpg" alt="Firaa">
+        </div>
+        <p>"Semoga di umur yang baru ini, kamu makin dewasa, makin cantik, dan semua yang kamu cita-citakan tercapai. Tetap jadi 'Firaa' yang aku kenal ya! ✨"</p>
+        <button class="next-btn" onclick="nextPage(4)">Terakhir dari aku ❤️</button>
+    </div>
+
+    <div class="page" id="p4">
+        <h1 style="font-size: 3rem;">I Love You!</h1>
+        <p>Makasii sudah lahir ke dunia dan jadi bagian dari hidupku. Aku sayang kamu bgt bgt bgt! jangann lupaa senyum yahh liatin gigi ompong kamuu.</p>
+        <p style="margin-top: 30px; font-size: 0.9rem; opacity: 0.7;">— From Rafi with Love —</p>
+        <button class="next-btn" onclick="location.reload()">Ulangi Momen? 🔄</button>
+    </div>
+
+    <script>
+        function nextPage(num) {
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(p => p.classList.remove('active'));
+            
+            document.getElementById('p' + num).classList.add('active');
+
+            // Musik mulai saat pindah halaman (mengatasi blokir browser)
+            let audio = document.getElementById('mySong');
+            audio.play().catch(function(error) {
+                console.log("Musik butuh interaksi user");
+            });
+            
+            // Efek hujan hati
+            for(let i=0; i<15; i++) {
+                setTimeout(createHeart, i * 100);
+            }
+        }
+
+        function createHeart() {
+            const h = document.createElement('div');
+            h.className = 'heart';
+            h.innerHTML = '❤️';
+            h.style.left = Math.random() * 100 + 'vw';
+            h.style.fontSize = (Math.random() * 20 + 10) + 'px';
+            document.body.appendChild(h);
+            setTimeout(() => h.remove(), 3000);
+        }
+    </script>
+</body>
+</html>
